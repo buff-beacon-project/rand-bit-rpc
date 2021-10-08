@@ -1,28 +1,27 @@
 import { root, RPCMessage } from './types/index.js'
-import { v4 as uuid } from 'uuid'
 
-export function encodeRequest(command, payloadType, payload) {
+export function encodePayload(payloadType, payload){
+  if (!payloadType){ return {} }
   const type = root.lookupType(payloadType)
   const message = type.fromObject(payload)
   const encoded = type.encode(message).finish()
+  return { type_url: payloadType, value: encoded }
+}
 
-  const id = uuid()
+export function encodeRequest(id, command, payloadType, payload) {
   const request = RPCMessage.create({
     id,
     timestamp: Date.now(),
     type: 'REQUEST',
     status: 'OK',
     command,
-    payload: { type_url: payloadType, value: encoded }
+    payload: encodePayload(payloadType, payload)
   })
 
   return RPCMessage.encodeDelimited(request).finish()
 }
 
 export function encodeResponse(request, payloadType, payload) {
-  const type = root.lookupType(payloadType)
-  const message = type.fromObject(payload)
-  const encoded = type.encode(message).finish()
   const status = payloadType === 'ErrorResponse' ? 'ERROR' : 'OK'
 
   RPCMessage.create({
@@ -31,7 +30,7 @@ export function encodeResponse(request, payloadType, payload) {
     type: 'RESPONSE',
     status,
     command: request.command,
-    payload: { type_url: payloadType, value: encoded }
+    payload: encodePayload(payloadType, payload)
   })
 
   return RPCMessage.encodeDelimited(request).finish()
