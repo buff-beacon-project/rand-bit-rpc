@@ -6,10 +6,15 @@ import bitbox from './bitbox.js'
 import encryptedData from './encrypted-data.js'
 import resultContent from './result-content.js'
 
+const Any = new protobufjs.Type('Any')
+  .add(new protobufjs.Field('type_url', 1, 'string'))
+  .add(new protobufjs.Field('value', 2, 'bytes'))
+
 export const root = new protobufjs.Root()
+root.define('google.protobuf').add(Any)
 protobufjs.parse([
   'syntax = "proto3";',
-  'import "google/protobuf/any.proto";',
+  // 'import "google/protobuf/any.proto";',
   rpcMessage,
   errorResponse,
   notification,

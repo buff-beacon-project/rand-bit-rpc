@@ -1,5 +1,5 @@
 export default `
 message Notification {
-  string message = 0;
+  string message = 1;
 }
 `

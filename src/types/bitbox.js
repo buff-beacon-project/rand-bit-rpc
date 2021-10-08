@@ -1,15 +1,15 @@
 export default `
 message BitBox {
-  string id = 0;
-  string status = 1;
-  string pk = 2;
-  uint32 priority = 3;
-  uint32 refill_rate_limit = 4;
-  string last_updated = 5;
-  string next_update = 6;
-  uint32 nbits = 7;
-  string seed = 8;
-  bytes result = 9;
-  bytes signature = 10;
+  string id = 1;
+  string status = 2;
+  string pk = 3;
+  uint32 priority = 4;
+  uint32 refill_rate_limit = 5;
+  string last_updated = 6;
+  string next_update = 7;
+  uint32 nbits = 8;
+  string seed = 9;
+  bytes result = 10;
+  bytes signature = 11;
 }
 `
