@@ -1,33 +1,6 @@
-import protobufjs from 'protobufjs'
 import crypto from 'libp2p-crypto'
 import { publicEncrypt, privateDecrypt, constants } from 'crypto'
-
-const proto = `
-syntax = "proto3";
-
-// the result of a bell experiment, before encryption
-message ResultContent {
-  uint32 timestamp = 1;
-  string version = 2;
-  bytes value = 3;
-  string certificate = 4;
-  repeated double seed = 5;
-  repeated double pefs = 6;
-  repeated double extractor_params = 7;
-  bytes raw = 8;
-}
-
-message EncryptedData {
-  string public_key = 1;
-  bytes iv = 2;
-  bytes key = 3;
-  bytes ciphertext = 4;
-}
-`
-const root = new protobufjs.Root()
-protobufjs.parse(proto, root)
-const ResultContent = root.lookupType('ResultContent')
-const EncryptedData = root.lookupType('EncryptedData')
+import { ResultContent, EncryptedData } from './types/index.js'
 
 function encryptKey(publicKey, payload) {
   return publicEncrypt(
