@@ -12,8 +12,8 @@ export function encodeRequest(id, command, payloadType, payload) {
   const request = RPCMessage.create({
     id,
     timestamp: Date.now(),
-    type: 'REQUEST',
-    status: 'OK',
+    type: 0,
+    status: 0,
     command,
     payload: encodePayload(payloadType, payload)
   })
@@ -22,18 +22,18 @@ export function encodeRequest(id, command, payloadType, payload) {
 }
 
 export function encodeResponse(request, payloadType, payload) {
-  const status = payloadType === 'ErrorResponse' ? 'ERROR' : 'OK'
+  const status = payloadType === 'ErrorResponse' ? 1 : 0
 
-  RPCMessage.create({
+  const response = RPCMessage.create({
     id: request.id,
     timestamp: Date.now(),
-    type: 'RESPONSE',
+    type: 1,
     status,
     command: request.command,
     payload: encodePayload(payloadType, payload)
   })
 
-  return RPCMessage.encode(request).finish()
+  return RPCMessage.encode(response).finish()
 }
 
 export function encodeErrorResponse(request, error) {
