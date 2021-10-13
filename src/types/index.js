@@ -5,6 +5,7 @@ import notification from './notification.js'
 import bitbox from './bitbox.js'
 import encryptedData from './encrypted-data.js'
 import resultContent from './result-content.js'
+import startCommand from './start-command.js'
 
 const Any = new protobufjs.Type('Any')
   .add(new protobufjs.Field('type_url', 1, 'string'))
@@ -20,7 +21,8 @@ protobufjs.parse([
   notification,
   bitbox,
   encryptedData,
-  resultContent
+  resultContent,
+  startCommand
 ].join('\n'), root)
 
 export const RPCMessage = root.lookupType('RPCMessage')
