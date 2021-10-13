@@ -18,7 +18,7 @@ export function encodeRequest(id, command, payloadType, payload) {
     payload: encodePayload(payloadType, payload)
   })
 
-  return RPCMessage.encodeDelimited(request).finish()
+  return RPCMessage.encode(request).finish()
 }
 
 export function encodeResponse(request, payloadType, payload) {
@@ -33,7 +33,7 @@ export function encodeResponse(request, payloadType, payload) {
     payload: encodePayload(payloadType, payload)
   })
 
-  return RPCMessage.encodeDelimited(request).finish()
+  return RPCMessage.encode(request).finish()
 }
 
 export function encodeErrorResponse(request, error) {
@@ -44,7 +44,7 @@ export function encodeErrorResponse(request, error) {
 }
 
 export function decode(buffer) {
-  return RPCMessage.toObject(RPCMessage.decodeDelimited(buffer), {
+  return RPCMessage.toObject(RPCMessage.decode(buffer), {
     enums: String,
     json: true
   })
