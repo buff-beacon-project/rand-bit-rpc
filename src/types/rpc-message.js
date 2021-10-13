@@ -13,6 +13,6 @@ message RPCMessage {
   }
   RPCStatus status = 4;
   string command = 5;
-  Payload payload = 6;
+  google.protobuf.Any payload = 6;
 }
 `

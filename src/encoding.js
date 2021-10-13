@@ -44,17 +44,8 @@ export function encodeErrorResponse(request, error) {
 }
 
 export function decode(buffer) {
-  const obj = RPCMessage.toObject(RPCMessage.decode(buffer), {
+  return RPCMessage.toObject(RPCMessage.decode(buffer), {
     enums: String,
     json: true
   })
-
-  const type = root.lookupType(obj.payload.type_url)
-  const payload = type.toObject(type.decode(obj.payload.value), {
-    enums: String,
-    json: true,
-  })
-
-  obj.payload = payload
-  return obj
 }
